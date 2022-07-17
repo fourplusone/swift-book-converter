@@ -14,9 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: swift build -v
+      run: swift build
     - name: Run tests
-      run: swift test -v
+      run: swift test
     - name: Generate documentation
       run: |
         swift run BookConverterCLI --output ../SwiftTour.docc Tests/BookConverterTests/SwiftBook
