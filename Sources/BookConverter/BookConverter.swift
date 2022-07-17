@@ -134,14 +134,14 @@ public struct BookConverter {
         }
         
         let manifestItems = Dictionary<String, String>(uniqueKeysWithValues: manifest.elements(forName: "item").compactMap { item in
-            guard let id = item.attribute(forName: "id")?.stringValue else { return nil }
-            guard let href = item.attribute(forName: "href")?.stringValue else { return nil }
+            guard let id = item.attributes?.first(where:{ $0.name == "id" })?.stringValue else { return nil }
+            guard let href = item.attributes?.first(where: { $0.name == "href" })?.stringValue else { return nil }
             
             return (id, href)
         })
         
         return spine.elements(forName: "itemref").compactMap { itemref in
-            guard let idref = itemref.attribute(forName: "idref")?.stringValue else { return nil }
+            guard let idref = itemref.attributes?.first(where:{ $0.name == "idref" })?.stringValue else { return nil }
             return manifestItems[idref]
         }
     }

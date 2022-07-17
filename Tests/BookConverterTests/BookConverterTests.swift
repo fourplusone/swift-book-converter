@@ -18,7 +18,6 @@ final class BookConverterTests: XCTestCase {
         let rootURL = Bundle.module.url(forResource: "SwiftBook", withExtension: nil)!
         let url = rootURL.appendingPathComponent("GuidedTour/GuidedTour.xhtml")
         let converter = try XHTMLConverter(xhtml: try String(contentsOf: url))
-        
         // Just test, whether conversion doens't throw any errors
         let _ = try converter.convert(anchors: [:])
     }
@@ -66,6 +65,6 @@ final class BookConverterTests: XCTestCase {
         let result = try parser.parseInline(element: element) as? Image
         
         
-        XCTAssertEqual(result?.source, "img_2x")
+        XCTAssertEqual(result?.source, "img")
     }
 }
