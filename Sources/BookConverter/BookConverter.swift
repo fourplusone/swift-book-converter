@@ -1,5 +1,8 @@
 import SwiftSoup
 import Foundation
+#if canImport(FoundationXML)
+import FoundationXML
+#endif
 
 func assetName(for baseName: String) -> (name: String, isHiRes:Bool) {
     let components = baseName.split(separator: "_")
