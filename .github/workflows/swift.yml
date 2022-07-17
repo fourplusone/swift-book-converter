@@ -29,7 +29,8 @@ jobs:
           --fallback-display-name Swift \
           --fallback-bundle-identifier com.apple.Swift \
           --fallback-bundle-version 1 \
-          --output-path ../docs
+          --output-path ../docs \
+          --hosting-base-path /swift-book-converter
         cd ..
         git config --global user.email "${GITHUB_ACTOR}"
         git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
