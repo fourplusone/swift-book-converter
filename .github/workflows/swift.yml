@@ -22,6 +22,8 @@ jobs:
         swift run BookConverterCLI --output ../SwiftTour.docc Tests/BookConverterTests/SwiftBook
         cd ..
         git clone https://github.com/apple/swift-docc.git
+        git clone https://github.com/apple/swift-docc-render-artifact.git
+        export DOCC_HTML_DIR="$(pwd)/swift-docc-render-artifact/dist"
         cd swift-docc
         swift run docc convert ../SwiftTour.docc  \
           --fallback-display-name Swift \
