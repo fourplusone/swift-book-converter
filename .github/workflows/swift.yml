@@ -1,0 +1,43 @@
+name: Swift
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
+    - name: Generate documentation
+      run: |
+        swift run BookConverterCLI --output ../SwiftTour.docc Tests/BookConverterTests/SwiftBook
+        cd ..
+        git clone https://github.com/apple/swift-docc.git
+        cd swift-docc
+        swift run docc convert ../SwiftTour.docc  \
+          --fallback-display-name Swift \
+          --fallback-bundle-identifier com.apple.Swift \
+          --fallback-bundle-version 1 \
+          --output-path ../docs
+        cd ..
+        git config --global user.email "${GITHUB_ACTOR}"
+        git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+        git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" out
+        cd out
+        git checkout gh-pages
+        git rm --ignore-unmatch -rf .
+        cd ..
+        cp -a docs/. out/.
+        cd out
+        git add -A
+        git commit -m "Automated deployment to GitHub Pages: ${GITHUB_SHA}" --allow-empty
+        git push origin gh-pages
